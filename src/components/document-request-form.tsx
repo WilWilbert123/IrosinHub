@@ -46,7 +46,7 @@ export function DocumentRequestForm({ barangayId }: { barangayId: string }) {
   const [open, setOpen] = React.useState(false)
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [trackingCode, setTrackingCode] = React.useState<string | null>(null)
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,7 +60,7 @@ export function DocumentRequestForm({ barangayId }: { barangayId: string }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     const supabase = createClient()
-    
+
     // Generate a simple 8-char tracking code
     const generatedCode = Math.random().toString(36).substring(2, 10).toUpperCase()
 
@@ -89,7 +89,7 @@ export function DocumentRequestForm({ barangayId }: { barangayId: string }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger 
+      <DialogTrigger
         render={
           <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white w-full sm:w-auto">
             Request Document Online
@@ -103,7 +103,7 @@ export function DocumentRequestForm({ barangayId }: { barangayId: string }) {
             Fill out the form below to request a clearance, certificate, or other document.
           </DialogDescription>
         </DialogHeader>
-        
+
         {trackingCode ? (
           <div className="py-6 text-center space-y-4">
             <div className="bg-emerald-100 dark:bg-emerald-900/30 p-4 rounded-lg">
@@ -187,5 +187,7 @@ export function DocumentRequestForm({ barangayId }: { barangayId: string }) {
         )}
       </DialogContent>
     </Dialog>
+
+
   )
 }
