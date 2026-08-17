@@ -44,7 +44,7 @@ export function ImageCarousel({ images, fallbackImage }: { images: string[], fal
         priority={currentIndex === 0}
         className="object-cover transition-transform duration-500 ease-in-out"
       />
-      
+
       {images.length > 1 && (
         <>
           <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -76,11 +76,10 @@ export function ImageCarousel({ images, fallbackImage }: { images: string[], fal
             {images.map((_, idx) => (
               <button
                 key={idx}
-                className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                  idx === currentIndex 
-                    ? "bg-white w-6 shadow-sm" 
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === currentIndex
+                    ? "bg-white w-6 shadow-sm"
                     : "bg-white/50 hover:bg-white/80"
-                }`}
+                  }`}
                 onClick={(e) => {
                   e.preventDefault();
                   setCurrentIndex(idx);
