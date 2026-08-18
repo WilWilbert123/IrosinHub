@@ -31,12 +31,15 @@ export default async function ResortDetailPage({
 
   let galleryImages: string[] = []
   try {
-    const imagesFolder = path.join(process.cwd(), 'public', 'resorts', resort.slug)
+    const folderSlug = (resort.slug === 'xanders-private-resort' || resort.slug === 'xanders-place-bulusan-view') 
+      ? 'xander-place-resort' 
+      : resort.slug;
+    const imagesFolder = path.join(process.cwd(), 'public', 'resorts', folderSlug)
     if (fs.existsSync(imagesFolder)) {
       const files = fs.readdirSync(imagesFolder)
       galleryImages = files
         .filter(file => file.match(/\.(jpg|jpeg|png|webp)$/i))
-        .map(file => `/resorts/${resort.slug}/${file}`)
+        .map(file => `/resorts/${folderSlug}/${file}`)
     }
   } catch (e) {
     console.error("Error reading images directory", e)

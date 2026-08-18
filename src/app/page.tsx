@@ -7,7 +7,7 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { getResortImage } from "@/lib/utils"
+import { getResortImage, LOCAL_IMAGES } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/server"
 import HeroBackground from "@/components/HeroBackground"
 import ShinyText from "@/components/ShinyText/ShinyText"
@@ -21,8 +21,6 @@ export default async function Home() {
     .from("resorts")
     .select("*, barangays(name, slug)")
     .eq("is_featured", true)
-    .limit(3)
-
     .limit(3)
 
   return (
@@ -92,17 +90,21 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {featuredResorts?.map((resort) => {
             let thumbnail = getResortImage(resort);
-            try {
-              const imagesFolder = path.join(process.cwd(), 'public', 'resorts', resort.slug)
-              if (fs.existsSync(imagesFolder)) {
-                const files = fs.readdirSync(imagesFolder)
-                const validFiles = files.filter(file => file.match(/\.(jpg|jpeg|png|webp)$/i))
-                if (validFiles.length > 0) {
-                  thumbnail = `/resorts/${resort.slug}/${validFiles[0]}`;
+            
+            // Only try to find a dynamic folder image if this resort is NOT explicitly mapped
+            if (!resort.slug || !LOCAL_IMAGES[resort.slug as keyof typeof LOCAL_IMAGES]) {
+              try {
+                const imagesFolder = path.join(process.cwd(), 'public', 'resorts', resort.slug)
+                if (fs.existsSync(imagesFolder)) {
+                  const files = fs.readdirSync(imagesFolder)
+                  const validFiles = files.filter(file => file.match(/\.(jpg|jpeg|png|webp)$/i))
+                  if (validFiles.length > 0) {
+                    thumbnail = `/resorts/${resort.slug}/${validFiles[0]}`;
+                  }
                 }
+              } catch (e) {
+                // ignore
               }
-            } catch (e) {
-              // ignore
             }
 
             return (

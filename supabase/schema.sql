@@ -69,20 +69,6 @@ CREATE TABLE IF NOT EXISTS public.resorts (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 4. Document Requests
-CREATE TABLE IF NOT EXISTS public.document_requests (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    barangay_id UUID REFERENCES public.barangays(id),
-    resident_name TEXT NOT NULL,
-    resident_email TEXT,
-    resident_phone TEXT NOT NULL,
-    doc_type TEXT CHECK (doc_type IN ('Barangay Clearance', 'Certificate of Indigency', 'Certificate of Residency', 'Business Permit Endorsement')),
-    purpose TEXT NOT NULL,
-    status TEXT DEFAULT 'Pending' CHECK (status IN ('Pending', 'Processing', 'Approved', 'Ready for Pickup')),
-    tracking_code TEXT UNIQUE NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
 -- Enable RLS
 ALTER TABLE public.site_metrics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.barangays ENABLE ROW LEVEL SECURITY;
@@ -142,8 +128,7 @@ INSERT INTO public.resorts (barangay_id, name, slug, type, water_type, phone, ve
 ((SELECT id FROM public.barangays WHERE name = 'Monbon' LIMIT 1), '401K Resort', '401k-resort', 'Hot spring / resort', 'Hot Spring', NULL, 'verified_listing', 'Open', 'Monbon / Bliss, Irosin, Sorsogon'),
 ((SELECT id FROM public.barangays WHERE name = 'Mapaso' LIMIT 1), 'Tropical Hot Spring Paradise', 'tropical-hot-spring-paradise', 'Natural hot spring resort', 'Hot Spring', '+63 920 245 6228', 'needs_verification', 'Unknown', 'Mapaso / Monbon, Irosin, Sorsogon'),
 ((SELECT id FROM public.barangays WHERE name = 'Monbon' LIMIT 1), 'Dulce Resort / Agua Dulce Resort', 'dulce-resort', 'Resort', NULL, NULL, 'needs_verification', 'Unknown', 'Monbon, Irosin, Sorsogon'),
-((SELECT id FROM public.barangays WHERE name = 'Monbon' LIMIT 1), 'Xander''s Place – Bulusan View', 'xanders-place-bulusan-view', 'Resort / accommodation', NULL, '059 416 4754', 'verified_listing', 'Open', 'Monbon area, Irosin, Sorsogon'),
-((SELECT id FROM public.barangays WHERE name = 'Monbon' LIMIT 1), 'Xander''s Private Resort', 'xanders-private-resort', 'Private hot-spring villas', 'Hot Spring', NULL, 'verified_listing', 'Open', 'Monbon, Irosin, Sorsogon'),
+((SELECT id FROM public.barangays WHERE name = 'Monbon' LIMIT 1), 'Xander Place Resort', 'xander-place-resort', 'Private hot-spring villas', 'Hot Spring', '059 416 4754', 'verified_listing', 'Open', 'Monbon, Irosin, Sorsogon'),
 ((SELECT id FROM public.barangays WHERE name = 'Monbon' LIMIT 1), 'Caliente Spring Resort', 'caliente-spring-resort', 'Private hot spring / villas', 'Hot Spring', '+63 939 863 5500', 'verified_listing', 'Open', 'Monbon, Irosin, Sorsogon'),
 (NULL, 'Casa Sereno Spring Resort', 'casa-sereno-spring-resort', 'Spring resort', 'Spring', '+63 951 476 3006', 'verified_listing', 'Open', 'Bliss, Irosin, Sorsogon'),
 (NULL, 'The Spring House', 'the-spring-house', 'Resort hotel', NULL, '+63 992 942 9426', 'verified_listing', 'Open', 'Irosin, Sorsogon'),

@@ -26,8 +26,15 @@ const NATURE_RESORT_IMAGES = [
   'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=1200&auto=format&fit=crop'
 ]
 
-const LOCAL_IMAGES: Record<string, string> = {
-  'mateo-hot-and-cold-spring-resort': '/resorts/san-benon.jpg',
+export const LOCAL_IMAGES: Record<string, string> = {
+  'caliente-spring-resort': '/resorts/caliente-spring-resort/650413758_996616446208921_2987596616798843333_n.jpg',
+  'xander-place-resort': '/resorts/xander-place-resort/469364602_1242069397003501_5215070906159323698_n.jpg',
+  'xanders-private-resort': '/resorts/xander-place-resort/469364602_1242069397003501_5215070906159323698_n.jpg',
+  'xanders-place-bulusan-view': '/resorts/xander-place-resort/469364602_1242069397003501_5215070906159323698_n.jpg',
+  'casa-sereno-spring-resort': '/resorts/casa-sereno-spring-resort/Screenshot 2026-08-18 at 11.50.01 PM.png',
+  'the-spring-house': '/resorts/the-spring-house/482222824_1109180734587764_2164647535738351222_n.jpg',
+  'gabzk-hotel-resort': '/resorts/gabzk-hotel-resort/482024013_607855058689542_5649534656425886156_n.jpg',
+  'modesta-resort': '/resorts/modesta-resort/Modesta%20Resort.jpeg',
 }
 
 export function getResortImage(resort: { image_url?: string | null, water_type?: string | null, type?: string | null, id: string, slug?: string }) {
